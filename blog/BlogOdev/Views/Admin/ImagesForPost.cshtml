@@ -1,0 +1,46 @@
+﻿@model IList<BlogOdev.Core.Objects.Image>
+
+@{
+    ViewBag.Title = "PostCreateOrUpdate";
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Resim Yükleme</title>
+
+    @Styles.Render("~/Content/themes/simple/admin")
+</head>
+<body>
+    <div id="login-div">
+        @Html.ValidationSummary(true)
+
+        @foreach (var item in Model)
+        {
+            <img src="~/Content/images/@item.ImagePath" /> <a href="/Admin/DeleteImage/@item.Id">Sil</a>
+        }
+        
+        <form method="post" action="/Admin/AddImage" enctype="multipart/form-data">
+
+            <input type="hidden" id="Id" name="Id" value="@ViewBag.PostId" />
+            <fieldset>
+                <legend>Login</legend>
+                <p>
+                    <label>Yeni Resim Ekle</label>
+                    <input type="file" name="yuklenecekDosya" />
+                </p>               
+
+                <p>
+                    <input type="submit" value="Yükle" />
+                </p>
+            </fieldset>
+        </form>
+</div>
+</body>
+</html>

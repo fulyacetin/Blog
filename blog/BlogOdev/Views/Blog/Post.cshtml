@@ -1,0 +1,42 @@
+﻿@model BlogOdev.Models.PostViewModel
+@{
+    ViewBag.Title = Model.Post.Title;
+    ViewBag.Keywords = string.Join(" ", Model.Post.Tags.Select(t => t.Name).ToArray());
+    ViewBag.Description = Model.Post.Meta;
+}
+<div id="content">
+    <div class="post">
+        <div class="post-meta">
+            <div class="row">
+                <div class="post-title">
+                    <h1>@Html.PostLink(Model.Post)</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="post-category">
+                    <span>Kategori:</span>&nbsp;@Html.CategoryLink(Model.Post.Category)
+                </div>
+                <div class="post-author">
+                    <span>Yazar:</span>&nbsp;@Html.AuthorLink(Model.Post.Author)
+                </div>
+                <div class="post-tags">
+                    <span>Etiketler:</span>&nbsp;@Helpers.Tags(Html, Model.Post.Tags)
+                </div>
+                <div class="no-of-comments">
+                    <a href="@string.Format("{0}#disqus_thread", Model.Post.Href(Url))"></a>
+                </div>
+                <div class="posted-date">
+                    @Model.Post.PostedOn.ToConfigLocalTime()
+                </div>
+            </div>
+        </div>
+        <div class="post-body">
+            @Html.Raw(Model.Post.Description)
+
+            @foreach (var image in Model.PostImages)
+            {
+                <img src="~/Content/images/@image.ImagePath" style="max-width:250px;max-height:250px" />
+            }
+        </div>
+    </div>
+</div>
